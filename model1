@@ -1,0 +1,15 @@
+#Best model so far 
+
+model = Sequential()
+
+model.add(Conv1D(16,4,activation="linear", padding="same", input_shape=( 100, 2) ))
+model.add(Conv1D(32,4,activation="relu",padding="same"))
+
+model.add(Bidirectional( LSTM(64, return_sequences=True , activation= "tanh") ))
+model.add(Bidirectional( LSTM(128, return_sequences=True , activation= "tanh") ))
+
+model.add(Dense(128,activation="tanh"))
+model.add(Dense( 1 ))
+
+model.compile(loss='mae', optimizer='adamax', metrics=['mse'])
+model.fit(xtrain, ytrain , epochs=10 , validation_data=(xval,yval) , batch_size=100)
